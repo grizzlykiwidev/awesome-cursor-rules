@@ -1,0 +1,17 @@
+---
+description: FastAPI + Pydantic v2 rules. Typed routes, dependencies, async correctness.
+globs: **/*.py
+alwaysApply: false
+---
+
+# FastAPI
+
+- Pydantic v2 only: `model_config = ConfigDict(...)`, `model_dump()`, `model_validate()`, `field_validator`. Never `class Config`, `.dict()`, `.parse_obj()` or `@validator`.
+- Separate request and response models; set `response_model` (or the return annotation) so internal fields never leak.
+- Use `Annotated[..., Depends(...)]` for dependencies: DB session, current user, settings.
+- Settings via `pydantic-settings` `BaseSettings`, loaded from env.
+- `async def` routes must only call async libraries (httpx.AsyncClient, async DB drivers). Use plain `def` for blocking code so it runs in the threadpool.
+- Raise `HTTPException` with correct status codes (400/401/403/404/409/422). Don't return error dicts with 200.
+- Use `lifespan` for startup/shutdown, not `@app.on_event`.
+- Group routes with `APIRouter` per domain.
+- Test with `TestClient` or `httpx.AsyncClient` + `ASGITransport`, overriding dependencies.

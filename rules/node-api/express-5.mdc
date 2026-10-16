@@ -1,0 +1,18 @@
+---
+description: Node.js + Express 5 API rules. Async errors, validation, ESM, structured responses.
+globs: **/*.ts, **/*.js, **/*.mjs
+alwaysApply: false
+---
+
+# Node.js API (Express 5)
+
+- Express 5: async route handlers that throw or reject are passed to the error middleware automatically. Don't wrap every route in try/catch or `express-async-handler`.
+- Path syntax changed in v5: use `/*splat` instead of `*`, and `{/:optional}` instead of `/:optional?`.
+- `req.body` is `undefined` without a body parser; add `express.json()` explicitly.
+- Validate `req.body`, `req.params` and `req.query` with zod at the start of each handler.
+- One central error-handling middleware `(err, req, res, next)` that logs and returns `{ error: { message, code } }` with the right status. Don't leak stack traces in production.
+- Use ESM (`import`/`export`) if `package.json` has `"type": "module"`. Don't mix with `require`.
+- Read config from `process.env` once in a `config` module and validate it at startup.
+- Use `helmet`, CORS with an explicit origin list, and rate limiting on auth routes.
+- Structure: `routes/` → `controllers/` (HTTP) → `services/` (logic) → `db/`. Keep business logic out of route files.
+- Use the built-in `fetch` (Node 18+) instead of adding axios unless the project already uses it.

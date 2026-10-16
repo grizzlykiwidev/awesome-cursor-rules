@@ -1,0 +1,16 @@
+---
+description: Testing rules. Write or update tests with every behaviour change; never weaken tests to pass.
+globs: **/*.test.*, **/*.spec.*, **/test_*.py, **/*_test.py, **/tests/**
+alwaysApply: false
+---
+
+# Testing
+
+- Every bug fix gets a test that fails before the fix and passes after.
+- Every new behaviour gets at least one happy-path and one edge/error-case test.
+- Test behaviour through the public interface, not implementation details or private functions.
+- Never delete, skip (`.skip`, `xit`, `@pytest.mark.skip`) or loosen assertions to make tests pass. If a test seems wrong, explain why and ask.
+- Use the project's existing framework (Vitest/Jest/Playwright/pytest). Don't introduce a new one.
+- Keep tests deterministic: no real network calls, fixed clocks and seeds, isolated temp dirs and databases.
+- Name tests as sentences: `it("returns 404 when the post does not exist")`.
+- Run the relevant tests after every change and report the actual output.

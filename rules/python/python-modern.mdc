@@ -1,0 +1,18 @@
+---
+description: Modern Python 3.12+ rules. Type hints, uv/ruff, pathlib, no legacy patterns.
+globs: **/*.py, pyproject.toml
+alwaysApply: false
+---
+
+# Modern Python
+
+- Target Python 3.12+. Use built-in generics and unions: `list[str]`, `dict[str, int]`, `str | None`. Not `List`, `Optional`.
+- Type-hint every function signature. Use `dataclasses` or pydantic models instead of loose dicts.
+- Use the project's tooling. If `uv.lock` exists, use `uv add` / `uv run`; don't call `pip install` directly. Format and lint with `ruff`.
+- `pathlib.Path` instead of `os.path`. f-strings instead of `%` / `.format`.
+- Use the `logging` module, not `print`, in library and server code.
+- Catch specific exceptions. Never bare `except:`; never swallow errors silently.
+- Use context managers (`with`) for files, locks, DB sessions and HTTP clients.
+- No mutable default arguments.
+- Tests use `pytest` with plain `assert`, fixtures and `tmp_path`.
+- Run `ruff check`, `ruff format` and the type checker (mypy/pyright) and tests after changes.
