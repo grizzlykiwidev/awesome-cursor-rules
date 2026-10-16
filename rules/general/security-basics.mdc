@@ -1,0 +1,16 @@
+---
+description: Security defaults the agent must apply to any code that touches input, auth, data or secrets.
+globs:
+alwaysApply: true
+---
+
+# Security basics
+
+- Treat all external input (request bodies, query strings, headers, files, webhooks, LLM output) as untrusted. Validate at the boundary with a schema (zod, pydantic, etc.).
+- Use parameterised queries or the ORM. Never build SQL with string concatenation or f-strings.
+- Check authorisation on the server for every read and write, not only in the UI. "Logged in" is not "allowed".
+- Secrets live in environment variables only. Never log them, return them in responses, or ship them to the client bundle (`NEXT_PUBLIC_*`, `VITE_*` are public).
+- Escape output; avoid `dangerouslySetInnerHTML`, `innerHTML`, `eval`, `exec` and `pickle.loads` on untrusted data.
+- Verify webhook signatures before trusting the payload.
+- Return generic error messages to users; log details server-side.
+- Prefer well-known libraries for crypto, sessions and password hashing (argon2/bcrypt). Never roll your own.

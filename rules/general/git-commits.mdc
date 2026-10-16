@@ -1,0 +1,14 @@
+---
+description: Git hygiene and Conventional Commit messages for AI agents.
+globs:
+alwaysApply: false
+---
+
+# Git and commits
+
+- One logical change per commit. Don't mix refactors with behaviour changes.
+- Use Conventional Commits: `feat:`, `fix:`, `refactor:`, `test:`, `docs:`, `chore:`, `perf:`. Imperative mood, under 72 characters, e.g. `fix: handle empty cart in checkout total`.
+- Add a body when the *why* isn't obvious from the diff.
+- Never commit `.env`, credentials, build output, `node_modules`, `.venv` or large binaries. Check `git status` and `git diff --staged` before committing.
+- Never `git push --force`, `git reset --hard`, rebase shared branches or amend pushed commits without explicit permission.
+- Don't stage files you didn't intentionally change.

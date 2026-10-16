@@ -1,0 +1,17 @@
+---
+description: Core behaviour for any AI coding agent. Small diffs, verify before claiming done, no invented APIs.
+globs:
+alwaysApply: true
+---
+
+# Core agent behaviour
+
+- Read the relevant files before editing. Never guess a file's contents, an import path or a function signature.
+- Make the smallest change that solves the task. Do not refactor, rename or reformat unrelated code.
+- Match the existing style, naming, folder layout and libraries. Do not add a dependency if the project already has one that does the job.
+- If an API, flag or package version is uncertain, check `package.json` / `pyproject.toml` / lockfiles or the docs. Do not invent APIs.
+- After editing, run the project's typecheck, lint and tests (see AGENTS.md). Report the result honestly; never say "done" if something failed or wasn't run.
+- Never hardcode secrets, tokens or API keys. Use environment variables and update `.env.example`.
+- Never delete files, rewrite git history, or run destructive commands (`rm -rf`, `git push --force`, `DROP TABLE`) without asking.
+- If the request is ambiguous or would require a large change, stop and ask one clear question with a recommended option.
+- When finished, summarise: what changed, which files, how it was verified, and anything left to do.
