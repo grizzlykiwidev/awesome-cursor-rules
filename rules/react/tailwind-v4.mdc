@@ -1,0 +1,16 @@
+---
+description: Tailwind CSS v4 rules. CSS-first config, no tailwind.config.js by default, v3 → v4 renames.
+globs: **/*.css, **/*.tsx, **/*.jsx, **/*.html, **/*.vue, **/*.svelte
+alwaysApply: false
+---
+
+# Tailwind CSS v4
+
+- Tailwind v4 is configured in CSS. Use `@import "tailwindcss";` and `@theme { ... }` for tokens. Don't create `tailwind.config.js` unless the project already has one.
+- Don't use `@tailwind base; @tailwind components; @tailwind utilities;` (v3 syntax).
+- Vite projects use the `@tailwindcss/vite` plugin; PostCSS projects use `@tailwindcss/postcss`.
+- v3 → v4 renames: `shadow-sm` → `shadow-xs`, `shadow` → `shadow-sm`, `rounded-sm` → `rounded-xs`, `rounded` → `rounded-sm`, `blur-sm` → `blur-xs`, `outline-none` → `outline-hidden`, `ring` → `ring-3`.
+- `bg-opacity-*` / `text-opacity-*` are gone: use `bg-black/50`.
+- Default border colour is `currentColor`; specify `border-gray-200` etc. explicitly.
+- Custom utilities use `@utility name { ... }`, not `@layer utilities`.
+- Prefer utility classes in markup. Extract a component, not an `@apply` soup.

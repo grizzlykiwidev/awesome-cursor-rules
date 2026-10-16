@@ -1,0 +1,18 @@
+---
+description: Modern React 19 component rules. Function components, hooks discipline, no unnecessary effects.
+globs: **/*.tsx, **/*.jsx
+alwaysApply: false
+---
+
+# React components
+
+- Function components and hooks only. No class components.
+- One component per file for anything non-trivial; name the file after the component.
+- Derive values during render instead of syncing them with `useEffect` + `useState`. Effects are for synchronising with external systems only.
+- Don't fetch in `useEffect` if the project has a data layer (TanStack Query, SWR, RSC, loaders). Use it.
+- Keys must be stable IDs, never array indexes for lists that can reorder.
+- Lift state only as far as needed. Prefer composition (children/props) over context; use context for genuinely global values.
+- Don't add `useMemo` / `useCallback` by default; add them when there's a measured problem or a referential-equality requirement. (React Compiler handles most cases.)
+- Forms: use `<form action>` / `useActionState` (React 19) or the project's form library. Every input has a label.
+- Accessibility: semantic elements (`button`, not clickable `div`), alt text, focus states, keyboard support.
+- Type props with a `type Props = {...}`; no `React.FC`.

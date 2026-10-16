@@ -1,0 +1,18 @@
+---
+description: Strict TypeScript rules. No any, narrow types, validate at the edges.
+globs: **/*.ts, **/*.tsx
+alwaysApply: false
+---
+
+# TypeScript
+
+- Assume `strict: true`. Never use `any`; use `unknown` and narrow it. No `@ts-ignore`; if unavoidable, `@ts-expect-error` with a reason.
+- Avoid non-null assertions (`!`) and `as` casts. Narrow with type guards or fix the type.
+- Validate external data (API responses, `JSON.parse`, env vars, form data) with zod or similar and infer the type from the schema.
+- Prefer `type` for unions and props; `interface` when extending object shapes. Be consistent with the codebase.
+- Use discriminated unions for state (`{ status: 'loading' } | { status: 'ok', data }`) instead of several optional booleans.
+- Use `satisfies` to check object literals without widening.
+- Exported functions have explicit return types.
+- Prefer `const` and readonly data. No `enum` in new code; use `as const` objects or string unions.
+- Use `import type` for type-only imports.
+- Run `tsc --noEmit` (or the project's typecheck script) after changes and fix all errors.
