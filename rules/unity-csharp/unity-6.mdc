@@ -1,0 +1,18 @@
+---
+description: Unity 6 C# rules. Current API names, Input System, safe MonoBehaviour patterns.
+globs: **/*.cs, **/*.unity, ProjectSettings/**
+alwaysApply: false
+---
+
+# Unity 6 (C#)
+
+- Unity 6 API renames: `Rigidbody.velocity` → `linearVelocity`, `drag` → `linearDamping`, `angularDrag` → `angularDamping`. `FindObjectOfType` → `FindFirstObjectByType` / `FindAnyObjectByType`; `FindObjectsOfType` → `FindObjectsByType(FindObjectsSortMode.None)`.
+- Use the Input System package (`UnityEngine.InputSystem`, Input Actions) if it's installed. Don't use `Input.GetKey` / `Input.GetAxis` in that case.
+- Cache component references in `Awake` (`GetComponent` once). Never call `GetComponent`, `Find` or `Camera.main` every frame in `Update`.
+- Physics in `FixedUpdate`; input reading and visuals in `Update`.
+- Expose fields with `[SerializeField] private`, not public fields.
+- Compare Unity objects with `== null` (or `if (obj)`); don't use `?.` or `??` on `UnityEngine.Object`.
+- Use `CompareTag("Enemy")`, not `tag == "Enemy"`.
+- Avoid allocations in hot paths (no LINQ, string concatenation or `new` lists per frame). Pool frequently spawned objects.
+- Use ScriptableObjects for shared config/data instead of singletons where possible.
+- Never edit `.meta` files or rename assets outside the Editor without warning the user; it breaks references.

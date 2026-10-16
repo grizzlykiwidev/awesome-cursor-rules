@@ -1,0 +1,30 @@
+---
+description: Godot 4 GDScript rules. Godot 4 syntax only, static typing, signals up / calls down.
+globs: project.godot, **/*.gd, **/*.tscn
+alwaysApply: false
+---
+
+# Godot 4 GDScript
+
+Use Godot 4 syntax only. Replace Godot 3 patterns:
+
+| Godot 3 | Godot 4 |
+|---|---|
+| `export var speed = 10` | `@export var speed: float = 10.0` |
+| `onready var x = $X` | `@onready var x: Node = $X` |
+| `yield(obj, "sig")` | `await obj.sig` |
+| `connect("pressed", self, "_on_pressed")` | `pressed.connect(_on_pressed)` |
+| `emit_signal("died")` | `died.emit()` |
+| `KinematicBody2D` | `CharacterBody2D` |
+| `move_and_slide(velocity, Vector2.UP)` | set `velocity`, then `move_and_slide()` |
+| `scene.instance()` | `scene.instantiate()` |
+| `tool` | `@tool` |
+| `setget` | `var x: int: set = _set_x, get = _get_x` |
+
+- Use static typing everywhere: `var hp: int = 3`, `func hit(dmg: int) -> void:`.
+- Declare signals with types: `signal health_changed(new_value: int)`.
+- "Call down, signal up": parents call child methods; children emit signals. Don't use `get_parent()` chains.
+- Use `@export` node references or `%UniqueName` instead of long `$A/B/C` paths.
+- Use autoloads sparingly, for truly global state (settings, save game, event bus).
+- Physics/movement in `_physics_process(delta)`; per-frame visuals in `_process(delta)`.
+- Don't edit `.tscn` / `.tres` files by hand unless asked; describe the editor change instead.
